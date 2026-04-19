@@ -1,0 +1,267 @@
+{
+  "name": "vscode-comment-renderer",
+  "displayName": "Review Comment Renderer",
+  "description": "Add GitHub-style inline review comments to local files and export them as Markdown for a coding agent.",
+  "version": "0.0.1",
+  "publisher": "statiolake",
+  "license": "MIT",
+  "author": "statiolake",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/statiolake/vscode-comment-renderer.git"
+  },
+  "homepage": "https://github.com/statiolake/vscode-comment-renderer#readme",
+  "bugs": {
+    "url": "https://github.com/statiolake/vscode-comment-renderer/issues"
+  },
+  "keywords": [
+    "review",
+    "comment",
+    "code review",
+    "markdown",
+    "coding agent"
+  ],
+  "engines": {
+    "vscode": "^1.100.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "commentRenderer",
+          "title": "Review Comments",
+          "icon": "media/icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "commentRenderer": [
+        {
+          "id": "commentRenderer.tree",
+          "name": "Threads",
+          "type": "tree"
+        },
+        {
+          "id": "commentRenderer.overall",
+          "name": "Overall & Export",
+          "type": "webview"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "vscode-comment-renderer.createThread",
+        "title": "Add Comment"
+      },
+      {
+        "command": "vscode-comment-renderer.replyThread",
+        "title": "Reply"
+      },
+      {
+        "command": "vscode-comment-renderer.editComment",
+        "title": "Edit",
+        "icon": "$(edit)"
+      },
+      {
+        "command": "vscode-comment-renderer.saveEditComment",
+        "title": "Save"
+      },
+      {
+        "command": "vscode-comment-renderer.cancelEditComment",
+        "title": "Cancel"
+      },
+      {
+        "command": "vscode-comment-renderer.deleteComment",
+        "title": "Delete",
+        "icon": "$(trash)"
+      },
+      {
+        "command": "vscode-comment-renderer.deleteThread",
+        "title": "Delete Thread",
+        "icon": "$(trash)"
+      },
+      {
+        "command": "vscode-comment-renderer.deleteThreadFromTree",
+        "title": "Delete Thread",
+        "icon": "$(trash)"
+      },
+      {
+        "command": "vscode-comment-renderer.deleteCommentFromTree",
+        "title": "Delete Comment",
+        "icon": "$(trash)"
+      },
+      {
+        "command": "vscode-comment-renderer.revealThread",
+        "title": "Reveal Thread"
+      },
+      {
+        "command": "vscode-comment-renderer.copyMarkdown",
+        "title": "Copy Review as Markdown",
+        "icon": "$(clippy)"
+      },
+      {
+        "command": "vscode-comment-renderer.previewMarkdown",
+        "title": "Preview Review as Markdown",
+        "icon": "$(preview)"
+      },
+      {
+        "command": "vscode-comment-renderer.clearAll",
+        "title": "Clear All Review Comments",
+        "icon": "$(clear-all)"
+      }
+    ],
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "vscode-comment-renderer.createThread",
+          "when": "false"
+        },
+        {
+          "command": "vscode-comment-renderer.replyThread",
+          "when": "false"
+        },
+        {
+          "command": "vscode-comment-renderer.editComment",
+          "when": "false"
+        },
+        {
+          "command": "vscode-comment-renderer.saveEditComment",
+          "when": "false"
+        },
+        {
+          "command": "vscode-comment-renderer.cancelEditComment",
+          "when": "false"
+        },
+        {
+          "command": "vscode-comment-renderer.deleteComment",
+          "when": "false"
+        },
+        {
+          "command": "vscode-comment-renderer.deleteThread",
+          "when": "false"
+        },
+        {
+          "command": "vscode-comment-renderer.deleteThreadFromTree",
+          "when": "false"
+        },
+        {
+          "command": "vscode-comment-renderer.deleteCommentFromTree",
+          "when": "false"
+        },
+        {
+          "command": "vscode-comment-renderer.revealThread",
+          "when": "false"
+        }
+      ],
+      "comments/commentThread/context": [
+        {
+          "command": "vscode-comment-renderer.createThread",
+          "group": "inline",
+          "when": "commentController == vscode-comment-renderer && commentThreadIsEmpty"
+        },
+        {
+          "command": "vscode-comment-renderer.replyThread",
+          "group": "inline",
+          "when": "commentController == vscode-comment-renderer && !commentThreadIsEmpty"
+        }
+      ],
+      "comments/commentThread/title": [
+        {
+          "command": "vscode-comment-renderer.deleteThread",
+          "group": "inline@1",
+          "when": "commentController == vscode-comment-renderer"
+        }
+      ],
+      "comments/comment/title": [
+        {
+          "command": "vscode-comment-renderer.editComment",
+          "group": "group@1",
+          "when": "commentController == vscode-comment-renderer && comment == preview"
+        },
+        {
+          "command": "vscode-comment-renderer.deleteComment",
+          "group": "group@2",
+          "when": "commentController == vscode-comment-renderer && comment == preview"
+        }
+      ],
+      "comments/comment/context": [
+        {
+          "command": "vscode-comment-renderer.saveEditComment",
+          "group": "inline@1",
+          "when": "commentController == vscode-comment-renderer && comment == editing"
+        },
+        {
+          "command": "vscode-comment-renderer.cancelEditComment",
+          "group": "inline@2",
+          "when": "commentController == vscode-comment-renderer && comment == editing"
+        }
+      ],
+      "view/title": [
+        {
+          "command": "vscode-comment-renderer.copyMarkdown",
+          "group": "navigation@1",
+          "when": "view == commentRenderer.tree"
+        },
+        {
+          "command": "vscode-comment-renderer.previewMarkdown",
+          "group": "navigation@2",
+          "when": "view == commentRenderer.tree"
+        },
+        {
+          "command": "vscode-comment-renderer.clearAll",
+          "group": "navigation@3",
+          "when": "view == commentRenderer.tree"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "vscode-comment-renderer.deleteThreadFromTree",
+          "group": "inline",
+          "when": "view == commentRenderer.tree && viewItem == reviewThread"
+        },
+        {
+          "command": "vscode-comment-renderer.deleteCommentFromTree",
+          "group": "inline",
+          "when": "view == commentRenderer.tree && viewItem == reviewComment"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run build",
+    "build": "npm run check-types && npm run lint && node esbuild.js --production",
+    "compile": "npm run check-types && npm run lint && node esbuild.js",
+    "watch": "npm-run-all -p watch:*",
+    "watch:esbuild": "node esbuild.js --watch",
+    "watch:tsc": "tsc --noEmit --watch --project tsconfig.json",
+    "package": "vsce package",
+    "publish": "vsce publish",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "npm run compile-tests && npm run compile && npm run lint",
+    "check-types": "tsc --noEmit",
+    "lint": "eslint src",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.10",
+    "@types/node": "22.x",
+    "@types/vscode": "^1.100.0",
+    "@typescript-eslint/eslint-plugin": "^8.45.0",
+    "@typescript-eslint/parser": "^8.45.0",
+    "@vscode/test-cli": "^0.0.11",
+    "@vscode/test-electron": "^2.5.2",
+    "@vscode/vsce": "^3.9.1",
+    "esbuild": "^0.25.10",
+    "eslint": "^9.36.0",
+    "npm-run-all": "^4.1.5",
+    "typescript": "^5.9.3"
+  }
+}
