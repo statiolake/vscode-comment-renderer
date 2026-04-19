@@ -7,7 +7,7 @@ import { renderMarkdown } from './markdown';
 
 export async function activate(context: vscode.ExtensionContext): Promise<void> {
 	const workspaceRoot = vscode.workspace.workspaceFolders?.[0]?.uri;
-	const store = new CommentStore(workspaceRoot);
+	const store = new CommentStore(context.workspaceState, workspaceRoot);
 	await store.load();
 
 	const controller = new ReviewController(store);

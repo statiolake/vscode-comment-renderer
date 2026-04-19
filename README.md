@@ -19,7 +19,7 @@ A VS Code extension that lets you leave GitHub-style inline review comments on y
 
     <your comment body>
     ```
-- **Persistence** — all threads and the overall comment are stored in `.vscode/review-comments.json` at the workspace root, so they survive reload.
+- **Persistence** — all threads and the overall comment are stored in VS Code's per-workspace state (`workspaceState`), so they survive reloads and unexpected restarts without polluting the workspace.
 - **Clear all** — one button (with confirm) wipes every thread plus the overall comment.
 
 ## Requirements

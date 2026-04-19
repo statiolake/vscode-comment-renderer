@@ -23,61 +23,32 @@ export interface StoreData {
 }
 
 const EMPTY: StoreData = { threads: [], overall: '' };
-const STORE_RELATIVE_PATH = ['.vscode', 'review-comments.json'];
+const STORE_KEY = 'commentRenderer.data';
 
 export class CommentStore {
 	private data: StoreData = structuredClone(EMPTY);
 	private readonly _onDidChange = new vscode.EventEmitter<void>();
 	readonly onDidChange = this._onDidChange.event;
 
-	constructor(private readonly workspaceRoot: vscode.Uri | undefined) {}
-
-	private storeUri(): vscode.Uri | undefined {
-		if (!this.workspaceRoot) {
-			return undefined;
-		}
-		return vscode.Uri.joinPath(this.workspaceRoot, ...STORE_RELATIVE_PATH);
-	}
+	constructor(
+		private readonly memento: vscode.Memento,
+		private readonly workspaceRoot: vscode.Uri | undefined,
+	) {}
 
 	async load(): Promise<void> {
-		const uri = this.storeUri();
-		if (!uri) {
+		const stored = this.memento.get<Partial<StoreData>>(STORE_KEY);
+		if (!stored) {
+			this.data = structuredClone(EMPTY);
 			return;
 		}
-		try {
-			const bytes = await vscode.workspace.fs.readFile(uri);
-			const parsed = JSON.parse(new TextDecoder().decode(bytes));
-			this.data = {
-				threads: Array.isArray(parsed.threads) ? parsed.threads : [],
-				overall: typeof parsed.overall === 'string' ? parsed.overall : '',
-			};
-		} catch (err) {
-			if ((err as { code?: string }).code === 'FileNotFound' || (err as { code?: string }).code === 'ENOENT') {
-				this.data = structuredClone(EMPTY);
-				return;
-			}
-			const name = (err as Error).name;
-			if (name === 'EntryNotFound') {
-				this.data = structuredClone(EMPTY);
-				return;
-			}
-			throw err;
-		}
+		this.data = {
+			threads: Array.isArray(stored.threads) ? stored.threads : [],
+			overall: typeof stored.overall === 'string' ? stored.overall : '',
+		};
 	}
 
 	private async save(): Promise<void> {
-		const uri = this.storeUri();
-		if (!uri) {
-			return;
-		}
-		const dir = vscode.Uri.joinPath(this.workspaceRoot!, '.vscode');
-		try {
-			await vscode.workspace.fs.createDirectory(dir);
-		} catch {
-			// ignore — already exists
-		}
-		const bytes = new TextEncoder().encode(JSON.stringify(this.data, null, 2) + '\n');
-		await vscode.workspace.fs.writeFile(uri, bytes);
+		await this.memento.update(STORE_KEY, this.data);
 	}
 
 	getData(): Readonly<StoreData> {
