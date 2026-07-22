@@ -1,9 +1,9 @@
 # Review Comment Renderer
 
 > [!IMPORTANT]
-> This extension is deprecated. Its functionality now lives in [VSCode Commentator](https://marketplace.visualstudio.com/items?itemName=statiolake.vscode-commentator), which keeps the same native review and Markdown-copy workflow while also letting local AI agents read, write, and navigate comments through a bundled CLI and loopback-only API.
+> This extension is deprecated. Its functionality now lives in [Review Relay](https://marketplace.visualstudio.com/items?itemName=statiolake.vscode-review-relay), which keeps the same native review and Markdown-copy workflow while also letting local AI agents read, write, and navigate comments through a bundled CLI and loopback-only API.
 
-Please migrate to [`statiolake.vscode-commentator`](https://marketplace.visualstudio.com/items?itemName=statiolake.vscode-commentator). This repository is archived and no longer receives updates.
+Please migrate to [`statiolake.vscode-review-relay`](https://marketplace.visualstudio.com/items?itemName=statiolake.vscode-review-relay). This repository is archived and no longer receives updates.
 
 A VS Code extension that lets you leave GitHub-style inline review comments on your own local codebase and export them as Markdown — the intended workflow is to paste the output into a coding agent (Claude Code, etc.) as a review-style change request.
 

@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.0.5
+
+- Point the migration notice to [Review Relay](https://marketplace.visualstudio.com/items?itemName=statiolake.vscode-review-relay).
+
 ## 0.0.4
 
 - Deprecate Review Comment Renderer in favor of [VSCode Commentator](https://marketplace.visualstudio.com/items?itemName=statiolake.vscode-commentator).
