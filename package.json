@@ -2,7 +2,7 @@
   "name": "vscode-comment-renderer",
   "displayName": "Review Comment Renderer",
   "description": "Add GitHub-style inline review comments to local files and export them as Markdown for a coding agent.",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "publisher": "statiolake",
   "license": "MIT",
   "author": "statiolake",
