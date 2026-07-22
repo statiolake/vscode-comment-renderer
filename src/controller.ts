@@ -195,15 +195,6 @@ export class ReviewController {
 		}
 	}
 
-	async deleteThreadByVs(vsThread: vscode.CommentThread): Promise<void> {
-		const storedId = this.findStoredIdForVsThread(vsThread);
-		if (storedId) {
-			await this.deleteThreadByStoredId(storedId);
-		} else {
-			vsThread.dispose();
-		}
-	}
-
 	async clearAll(): Promise<void> {
 		for (const t of this.threadsById.values()) {
 			t.dispose();

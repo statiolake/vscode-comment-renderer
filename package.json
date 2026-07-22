@@ -2,7 +2,7 @@
   "name": "vscode-comment-renderer",
   "displayName": "Review Comment Renderer",
   "description": "Add GitHub-style inline review comments to local files and export them as Markdown for a coding agent.",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "publisher": "statiolake",
   "license": "MIT",
   "author": "statiolake",
@@ -83,11 +83,6 @@
         "icon": "$(trash)"
       },
       {
-        "command": "vscode-comment-renderer.deleteThread",
-        "title": "Delete Thread",
-        "icon": "$(trash)"
-      },
-      {
         "command": "vscode-comment-renderer.deleteThreadFromTree",
         "title": "Delete Thread",
         "icon": "$(trash)"
@@ -144,10 +139,6 @@
           "when": "false"
         },
         {
-          "command": "vscode-comment-renderer.deleteThread",
-          "when": "false"
-        },
-        {
           "command": "vscode-comment-renderer.deleteThreadFromTree",
           "when": "false"
         },
@@ -172,22 +163,15 @@
           "when": "commentController == vscode-comment-renderer && !commentThreadIsEmpty"
         }
       ],
-      "comments/commentThread/title": [
-        {
-          "command": "vscode-comment-renderer.deleteThread",
-          "group": "inline@1",
-          "when": "commentController == vscode-comment-renderer"
-        }
-      ],
       "comments/comment/title": [
         {
           "command": "vscode-comment-renderer.editComment",
-          "group": "group@1",
+          "group": "inline@1",
           "when": "commentController == vscode-comment-renderer && comment == preview"
         },
         {
           "command": "vscode-comment-renderer.deleteComment",
-          "group": "group@2",
+          "group": "inline@2",
           "when": "commentController == vscode-comment-renderer && comment == preview"
         }
       ],

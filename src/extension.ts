@@ -58,10 +58,6 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
 			(comment: ReviewComment) => controller.deleteComment(comment),
 		),
 		vscode.commands.registerCommand(
-			'vscode-comment-renderer.deleteThread',
-			(thread: vscode.CommentThread) => controller.deleteThreadByVs(thread),
-		),
-		vscode.commands.registerCommand(
 			'vscode-comment-renderer.deleteThreadFromTree',
 			(element: TreeElement) => {
 				if (element?.kind === 'thread') {
